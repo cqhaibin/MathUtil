@@ -37,6 +37,10 @@ namespace MathUtil.Geometry
 
         #region property
         /// <summary>
+        /// 中心
+        /// </summary>
+        public Point2D Center => _center;
+        /// <summary>
         /// 焦点A(左/下)
         /// </summary>
         public Point2D FocusA

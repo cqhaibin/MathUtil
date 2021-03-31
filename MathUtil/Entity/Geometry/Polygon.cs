@@ -92,6 +92,10 @@ namespace MathUtil.Geometry
         #endregion
 
         #region static
+        public static explicit operator Point2D[](Polygon polygon)
+        {
+            return polygon._vertexes;
+        }
         /// <summary>
         /// 有效性检测
         /// </summary>

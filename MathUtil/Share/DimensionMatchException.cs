@@ -7,8 +7,8 @@ namespace MathUtil
     /// </summary>
     public class DimensionMatchException : Exception
     {
-        private const string _defaultMessage = "维度不匹配!";
         public DimensionMatchException()
-            : base(_defaultMessage) { }
+            : base(ErrorReason.DimensionDoesNoMatch)
+        { }
     }
 }

@@ -5,6 +5,7 @@ namespace MathUtil.UnitTest
 {
     public class CommonPartTest
     {
+
         [Fact]
         public void VectorTest()
         {
@@ -46,7 +47,7 @@ namespace MathUtil.UnitTest
         }
 
 
-        Polygon GetPolygon()
+        private Polygon GetPolygon()
         {
             var vertexes = new Point2D[]
             {
@@ -72,7 +73,7 @@ namespace MathUtil.UnitTest
             //Assert.True(polygon.GetArea().IsEqual(25));
         }
 
-        Triangle GetTriangle()
+        private Triangle GetTriangle()
         {
             var p1 = new Point2D(0, 0);
             var p2 = new Point2D(2, 0);

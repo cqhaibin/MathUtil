@@ -111,16 +111,6 @@ namespace MathUtil
             return Math.Abs(value) <= AccuracyError;
         }
         /// <summary>
-        /// 是否为0
-        /// </summary>
-        /// <param name="value">值</param>
-        /// <param name="error">误差</param>
-        /// <returns></returns>
-        public static bool IsZero(this double value, double error = AccuracyError)
-        {
-            return Math.Abs(value) <= Math.Abs(error);
-        }
-        /// <summary>
         /// 数量级
         /// </summary>
         /// <param name="value"></param>

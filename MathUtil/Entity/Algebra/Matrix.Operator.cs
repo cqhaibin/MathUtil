@@ -1,13 +1,13 @@
-﻿using System;
-
-namespace MathUtil.Algebra
+﻿namespace MathUtil.Algebra
 {
     public partial class Matrix
     {
         public static Matrix Negate(Matrix matrix)
         {
+            if (matrix is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(matrix));
             var result = new Matrix(matrix._rowCount, matrix._colCount, false);
-            for (int i = 0; i < result._total; i++)
+            for (int i = 0; i < result._elements.Length; i++)
             {
                 result.Set(i, -1d * matrix.Get(i));
             }
@@ -15,8 +15,10 @@ namespace MathUtil.Algebra
         }
         public static Matrix Add(Matrix matrix, double scalar)
         {
+            if (matrix is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(matrix));
             var result = new Matrix(matrix._rowCount, matrix._colCount, false);
-            for (int i = 0; i < result._total; i++)
+            for (int i = 0; i < result._elements.Length; i++)
             {
                 result.Set(i, scalar + matrix.Get(i));
             }
@@ -28,9 +30,13 @@ namespace MathUtil.Algebra
         }
         public static Matrix Add(Matrix left, Matrix right)
         {
+            if (left is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(left));
+            if (right is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(right));
             CheckSameDimension(left, right);
             var result = new Matrix(left._rowCount, left._colCount, false);
-            for (int i = 0; i < result._total; i++)
+            for (int i = 0; i < result._elements.Length; i++)
             {
                 result.Set(i, left.Get(i) + right.Get(i));
             }
@@ -38,8 +44,10 @@ namespace MathUtil.Algebra
         }
         public static Matrix Subtract(Matrix matrix, double scalar)
         {
+            if (matrix is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(matrix));
             var result = new Matrix(matrix._rowCount, matrix._colCount, false);
-            for (int i = 0; i < result._total; i++)
+            for (int i = 0; i < result._elements.Length; i++)
             {
                 result.Set(i, matrix.Get(i) - scalar);
             }
@@ -47,8 +55,10 @@ namespace MathUtil.Algebra
         }
         public static Matrix Subtract(double scalar, Matrix matrix)
         {
+            if (matrix is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(matrix));
             var result = new Matrix(matrix._rowCount, matrix._colCount, false);
-            for (int i = 0; i < result._total; i++)
+            for (int i = 0; i < result._elements.Length; i++)
             {
                 result.Set(i, scalar - matrix.Get(i));
             }
@@ -56,9 +66,13 @@ namespace MathUtil.Algebra
         }
         public static Matrix Subtract(Matrix left, Matrix right)
         {
+            if (left is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(left));
+            if (right is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(right));
             CheckSameDimension(left, right);
             var result = new Matrix(left._rowCount, left._colCount, false);
-            for (int i = 0; i < result._total; i++)
+            for (int i = 0; i < result._elements.Length; i++)
             {
                 result.Set(i, left.Get(i) - right.Get(i));
             }
@@ -66,8 +80,10 @@ namespace MathUtil.Algebra
         }
         public static Matrix Multiply(Matrix matrix, double scalar)
         {
+            if (matrix is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(matrix));
             var result = new Matrix(matrix._rowCount, matrix._colCount, false);
-            for (int i = 0; i < result._total; i++)
+            for (int i = 0; i < result._elements.Length; i++)
             {
                 result.Set(i, scalar * matrix.Get(i));
             }
@@ -79,15 +95,23 @@ namespace MathUtil.Algebra
         }
         public static Matrix Multiply(Matrix left, Matrix right)
         {
+            if (left is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(left));
+            if (right is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(right));
             CheckMultipliable(left, right);
             var result = new Matrix(left._rowCount, right._colCount);
-
+            //todo
             return result;
         }
         public static Vector Multiply(Matrix matrix, Vector vector)
         {
+            if (matrix is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(matrix));
+            if (vector is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(vector));
             CheckMultipliable(matrix, vector);
-            var result = new Vector(vector.Count);
+            var result = new Vector(vector.Dimension);
             for (int i = 0; i < matrix._rowCount; i++)
             {
                 var temp = 0d;
@@ -101,8 +125,12 @@ namespace MathUtil.Algebra
         }
         public static Vector Multiply(Vector vector, Matrix matrix)
         {
+            if (vector is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(vector));
+            if (matrix is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(matrix));
             CheckMultipliable(vector, matrix);
-            var result = new Vector(vector.Count);
+            var result = new Vector(vector.Dimension);
             for (int i = 0; i < matrix._colCount; i++)
             {
                 var temp = 0d;
@@ -118,24 +146,103 @@ namespace MathUtil.Algebra
         {
             return Matrix.Multiply(matrix, 1d / scalar);
         }
-        public static Matrix Divide(double scalar, Matrix matrix)
-        {
-            throw new NotImplementedException();
-        }
         public static Matrix Divide(Matrix left, Matrix right)
         {
-            throw new NotImplementedException();
+            //right需为可逆矩阵
+            //结果为 left 乘 right逆
+            if (left is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(left));
+            if (right is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(right));
+            throw new System.NotImplementedException();
         }
-        public static Matrix TransposeMultiply(Matrix matrix, Matrix other)
+
+        public void Add(double scalar)
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < _elements.Length; i++)
+            {
+                Set(i, scalar + Get(i));
+            }
         }
-        public static Matrix TransposeMultiply(Matrix matrix, Vector other)
+        public void Add(Matrix other)
         {
-            throw new NotImplementedException();
+            if (other is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(other));
+            CheckSameDimension(this, other);
+            for (int i = 0; i < _elements.Length; i++)
+            {
+                Set(i, Get(i) + other.Get(i));
+            }
+        }
+        public void Subtract(double scalar)
+        {
+            for (int i = 0; i < _elements.Length; i++)
+            {
+                Set(i, Get(i) - scalar);
+            }
+        }
+        public void Subtract(Matrix other)
+        {
+            if (other is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(other));
+            CheckSameDimension(this, other);
+            for (int i = 0; i < _elements.Length; i++)
+            {
+                Set(i, Get(i) - other.Get(i));
+            }
+        }
+        public void Multiply(double scalar)
+        {
+            for (int i = 0; i < _elements.Length; i++)
+            {
+                Set(i, scalar * Get(i));
+            }
+        }
+        public void Multiply(Matrix other)
+        {
+            if (other is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(other));
+            CheckSameDimension(this, other);
+        }
+        public void Divide(double scalar)
+        {
+            Multiply(1.0 / scalar);
+        }
+        public Matrix TransposeThisAndMultiply(Matrix other)
+        {
+            if (other is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(other));
+            CheckSameRow(this, other);
+
+            var result = new Matrix(_colCount, other._colCount);
+            //todo
+            return result;
         }
 
         #region operator
+        public static implicit operator Matrix(double[,] element)
+        {
+            return new Matrix(element);
+        }
+        public static bool operator ==(Matrix left, Matrix right)
+        {
+            if (left is null)
+                return right is null;
+            if (right is null)
+                return false;
+            if (left._rowCount != right._rowCount || left._colCount != right._colCount)
+                return false;
+            for (int i = 0; i < left._elements.Length; i++)
+            {
+                if (right.Get(i) != right.Get(i))
+                    return false;
+            }
+            return true;
+        }
+        public static bool operator !=(Matrix left, Matrix right)
+        {
+            return !(left == right);
+        }
         public static Matrix operator +(Matrix matrix, double scalar)
         {
             return Matrix.Add(matrix, scalar);
@@ -187,10 +294,6 @@ namespace MathUtil.Algebra
         public static Matrix operator /(Matrix matrix, double scalar)
         {
             return Matrix.Divide(matrix, scalar);
-        }
-        public static Matrix operator /(double scalar, Matrix matrix)
-        {
-            return Matrix.Divide(scalar, matrix);
         }
         #endregion
     }

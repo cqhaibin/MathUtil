@@ -15,16 +15,34 @@ namespace MathUtil.Algebra
 
         internal LU(Matrix matrix)
         {
-            if (matrix == null)
+            if (matrix is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(matrix));
-            int rows = matrix.Rows, cols = matrix.Columns;
-            if (rows != cols)
+            if (!matrix.IsSquare)
                 ThrowHelper.ThrowNotSupportedException(ErrorReason.OnlyForSquareMatrix);
-            _pivots = new int[rows];
+            _pivots = new int[matrix.Rows];
+            Init();
             _mat = matrix.Clone();
             _lower = new Lazy<Matrix>(() => SetDiagonal(_mat.LowerTriangle()));
             _upper = new Lazy<Matrix>(() => _mat.UpperTriangle());
         }
+
+        private void Init()
+        {
+            for (int i = 0; i < _pivots.Length; i++)
+            {
+                _pivots[i] = i;
+            }
+
+            var colVec = new double[_mat.Rows];
+
+            for (int i = 0; i < _mat.Rows; i++)
+            {
+
+            }
+        }
+
+
+
         private Matrix SetDiagonal(Matrix lower)
         {
             //下三角阵对角线化为1

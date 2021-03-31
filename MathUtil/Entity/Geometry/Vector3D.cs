@@ -122,10 +122,6 @@ namespace MathUtil.Geometry
             var dot = DotProduct(vector, normal);
             return vector - (2 * dot * normal);
         }
-        public static explicit operator Point3D(Vector3D vector)
-        {
-            return new Point3D(vector._x, vector._y, vector._z);
-        }
         #endregion
 
         #region public
@@ -152,6 +148,10 @@ namespace MathUtil.Geometry
         #endregion
 
         #region operator
+        public static explicit operator Point3D(Vector3D vector)
+        {
+            return new Point3D(vector._x, vector._y, vector._z);
+        }
         public static Vector3D operator +(Vector3D left, Vector3D right)
         {
             return new Vector3D(left._x + right._x, left._y + right._y, left._z + right._z);

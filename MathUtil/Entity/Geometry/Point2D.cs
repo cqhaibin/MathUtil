@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace MathUtil.Geometry
 {
@@ -8,6 +9,7 @@ namespace MathUtil.Geometry
     /// <remarks>
     /// 默认为笛卡尔坐标系(Cartesian Coordinates),直角坐标系,以第一象限为正
     /// </remarks>
+    [DebuggerDisplay("({X}, {Y})")]
     public struct Point2D : IEquatable<Point2D>
     {
         #region property

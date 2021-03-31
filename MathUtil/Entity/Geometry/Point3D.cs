@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace MathUtil.Geometry
 {
     /// <summary>
     /// 三维点
     /// </summary>
+    [DebuggerDisplay("({X}, {Y}, {Z})")]
     public struct Point3D : IEquatable<Point3D>
     {
         #region property
@@ -60,17 +62,6 @@ namespace MathUtil.Geometry
         }
         #endregion
 
-        #region static
-        /// <summary>
-        /// 原点指向本点的向量
-        /// </summary>
-        /// <param name="point"></param>
-        public static explicit operator Vector3D(Point3D point)
-        {
-            return new Vector3D(point._x, point._y, point._z);
-        }
-        #endregion
-
         #region public
         /// <summary>到指定点的距离</summary>
         /// <param name="point">目标点</param>
@@ -118,6 +109,14 @@ namespace MathUtil.Geometry
         #endregion
 
         #region operator
+        /// <summary>
+        /// 原点指向本点的向量
+        /// </summary>
+        /// <param name="point"></param>
+        public static explicit operator Vector3D(Point3D point)
+        {
+            return new Vector3D(point._x, point._y, point._z);
+        }
         public static Point3D operator +(Point3D point, Vector3D vector)
         {
             return new Point3D(point._x + vector.VX, point._y + vector.VY, point._z + vector.VZ);

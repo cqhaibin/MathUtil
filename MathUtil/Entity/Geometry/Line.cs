@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace MathUtil.Geometry
 {
     /// <summary>
     /// 直线
     /// </summary>
+    [DebuggerDisplay("{_a}X + {_b}Y + {_c} = 0")]
     public readonly struct Line : IEquatable<Line>
     {
         #region property

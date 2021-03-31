@@ -2,6 +2,9 @@
 
 namespace MathUtil.Algebra
 {
+    /// <summary>
+    /// QR分解
+    /// </summary>
     public class QR : ILineraEquationSolver
     {
         public Matrix Solve(Matrix input)

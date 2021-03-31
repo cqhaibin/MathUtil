@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace MathUtil.Geometry
 {
     /// <summary>
     /// (二维)线段
     /// </summary>
+    [DebuggerDisplay("( () )")]
     public readonly struct Segment : IEquatable<Segment>
     {
         #region property
@@ -41,9 +43,9 @@ namespace MathUtil.Geometry
         #endregion
 
         #region static
-        public static implicit operator Segment((Point2D, Point2D) segment)
+        public static implicit operator (Point2D, Point2D)(Segment segment)
         {
-            return new Segment(segment.Item1, segment.Item2);
+            return (segment.EpA, segment.EpB);
         }
         #endregion
 

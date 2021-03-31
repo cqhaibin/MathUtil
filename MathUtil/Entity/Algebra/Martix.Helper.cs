@@ -60,6 +60,16 @@
             if (left._rowCount != right._rowCount || left._colCount != right._colCount)
                 ThrowHelper.ThrowDimensionDontMatchException();
         }
+        private static void CheckSameRow(Matrix left, Matrix right)
+        {
+            if (left._rowCount != right._rowCount)
+                ThrowHelper.ThrowDimensionDontMatchException();
+        }
+        private static void CheckSameColumn(Matrix left, Matrix right)
+        {
+            if (left._colCount != right._colCount)
+                ThrowHelper.ThrowDimensionDontMatchException();
+        }
         private static void CheckMultipliable(Matrix left, Matrix right)
         {
             if (left._colCount != right._rowCount)
@@ -67,12 +77,12 @@
         }
         private static void CheckMultipliable(Matrix matrix, Vector vector)
         {
-            if (matrix._colCount != vector.Count)
+            if (matrix._colCount != vector.Dimension)
                 ThrowHelper.ThrowDimensionDontMatchException();
         }
         private static void CheckMultipliable(Vector vector, Matrix matrix)
         {
-            if (matrix._rowCount != vector.Count)
+            if (matrix._rowCount != vector.Dimension)
                 ThrowHelper.ThrowDimensionDontMatchException();
         }
     }

@@ -38,13 +38,25 @@ namespace MathUtil
         [DoesNotReturn]
         internal static void ThrowIndexOutOfRangeException(string argumentName) => throw new IndexOutOfRangeException($"{ErrorReason.IndexOutOfRange}!参数:{argumentName}");
         /// <summary>
+        /// 无穷数
+        /// </summary>
+        /// <param name="number">异常数</param>
+        [DoesNotReturn]
+        internal static void ThrowInfiniteNumberException(double number) => throw new NotFiniteNumberException(number);
+        /// <summary>
+        /// 数值溢出
+        /// </summary>
+        /// <param name="message">错误消息</param>
+        [DoesNotReturn]
+        internal static void ThrowOverflowException(string message) => throw new OverflowException(message);
+        /// <summary>
         /// 计算异常
         /// </summary>
         /// <param name="message">错误消息</param>
         [DoesNotReturn]
         internal static void ThrowArithmeticException(string message) => throw new ArithmeticException(message);
         /// <summary>
-        /// 维度异常
+        /// 维度匹配异常
         /// </summary>
         [DoesNotReturn]
         internal static void ThrowDimensionDontMatchException() => throw new DimensionMatchException();

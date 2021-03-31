@@ -22,7 +22,7 @@
         }
         private void CheckRange(int index)
         {
-            if (index < 0 || index >= _total)
+            if (index < 0 || index >= _elements.Length)
                 ThrowHelper.ThrowIndexOutOfRangeException(nameof(index));
         }
         //private static Vector Convert(Vector source, Func<double, double> func)
@@ -36,7 +36,7 @@
         //}
         private static void CheckSameDimension(Vector left, Vector right)
         {
-            if (left._total != right._total)
+            if (left._elements.Length != right._elements.Length)
                 ThrowHelper.ThrowDimensionDontMatchException();
         }
     }
